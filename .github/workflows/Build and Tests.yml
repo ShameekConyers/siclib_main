@@ -1,0 +1,28 @@
+name: Build and Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  # CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    # - name: Build_CPP
+    #   run: ${{github.workspace}}/scripts/test.sh
+
+    - name: Build_RUST
+      run: cargo build --verbose
+
+    - name: Tests
+      run: cargo test --verbose
