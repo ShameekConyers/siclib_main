@@ -3,8 +3,13 @@ name: Build and Tests
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - '**.md'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
 
 env:
   # CARGO_TERM_COLOR: always

@@ -5,7 +5,7 @@
 [![License: MIT][mit-image]][mit-url] [![Github Actions][github-actions-image]][github-actions-url]
  <!-- [![CPP][cpp-image]][cpp-url] [![RUST][rust-image]][rust-url] -->
 
-A hobby Rust/C++ library with custom implementations to use in other projects
+A Rust/C++ library with custom implementations to use in other projects
 
 ## Installation
 

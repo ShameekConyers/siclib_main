@@ -46,7 +46,7 @@ file(GLOB_RECURSE test_dir CONFIGURE_DEPENDS "tests/siclibcpp/**")
 
 add_library(${LIB_NAME} INTERFACE)
 
-target_include_directories(${LIB_NAME} INTERFACE "./src" "./build/_deps/range-src/include")
+target_include_directories(${LIB_NAME} INTERFACE "./src" ${CMAKE_SOURCE_DIR}/build/_deps/range-src/include)
 target_link_libraries(${LIB_NAME} INTERFACE fmt)
 
 add_executable(${TEST_NAME} ${test_dir})
