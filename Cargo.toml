@@ -7,12 +7,19 @@ description = "A Rust/C++ general use library."
 readme = "readme.md"
 homepage = "https://github.com/ShameekConyers/siclib"
 repository = "https://github.com/ShameekConyers/siclib"
-license = "MIT"
 license-file = "license.md"
 build = "build.rs"
+
+[lib]
+crate-type = ["lib", "cdylib"]
+path = "src/siclibrs/lib.rs"
 
 [dependencies]
 cxx = "1.0"
 
 [build-dependencies]
 cxx-build = "1.0"
+
+[[test]]
+name = "libtests"
+path = "tests/siclibrs/test_main.rs"

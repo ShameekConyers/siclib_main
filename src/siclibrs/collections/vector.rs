@@ -13,7 +13,7 @@ pub struct Vector<T> {
 
 unsafe impl<T: Sync> Sync for Vector<T> {}
 unsafe impl<T: Send> Send for Vector<T> {}
-
+trait Baz: Send + Sync {}
 impl<T> Vector<T> {
     pub fn new() -> Self {
         assert!(mem::size_of::<T>() != 0, "No zero sized types");

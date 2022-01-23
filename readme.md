@@ -7,7 +7,21 @@
 
 A Rust/C++ library with custom implementations to use in other projects
 
+## Design Philosophy
+
+To freely experiment with both languages in a tightly coupled environment. Rust and
+the C++ portion expose different interfaces, but are allowed to freely interop between
+one another internally.
+
+siclibcpp is the namespace for the C++ inferface
+siclibrs is the namespace for the Rust interface
+
 ## Installation
+
+using CMake's Fetch_Content for siclibcpp OR Cargo for siclibrs.
+
+## Example Concrete Implementations
+
 
 [mit-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [mit-url]: https://opensource.org/licenses/MIT
