@@ -22,4 +22,4 @@ cxx-build = "1.0"
 
 [[test]]
 name = "libtests"
-path = "tests/siclibrs/test_main.rs"
+path = "tests/siclibrs/main_test.rs"

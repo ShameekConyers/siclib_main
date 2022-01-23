@@ -18,9 +18,10 @@ siclibrs is the namespace for the Rust interface
 
 ## Installation
 
-using CMake's Fetch_Content for siclibcpp OR Cargo for siclibrs.
+using CMake's FetchContent for siclibcpp OR Cargo for siclibrs.
 
 ## Example Concrete Implementations
+
 
 
 [mit-image]: https://img.shields.io/badge/License-MIT-yellow.svg

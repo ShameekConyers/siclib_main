@@ -1,4 +1,4 @@
-// #![no_implicit_prelude]
+#![no_implicit_prelude]
 #![feature(allocator_api, ptr_internals)]
 #![cfg(target_arch = "x86_64")]
 
