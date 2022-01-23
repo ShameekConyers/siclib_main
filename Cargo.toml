@@ -1,7 +1,15 @@
 [package]
 name = "siclibrs"
 version = "0.1.0"
+authors = ["Shameek Conyers sic@usf.edu"]
 edition = "2021"
+description = "A Rust/C++ general use library."
+readme = "readme.md"
+homepage = "https://github.com/ShameekConyers/siclib"
+repository = "https://github.com/ShameekConyers/siclib"
+license = "MIT"
+license-file = "license.md"
+build = "build.rs"
 
 [dependencies]
 cxx = "1.0"
