@@ -13,8 +13,8 @@ To freely experiment with both languages in a tightly coupled environment. Rust 
 the C++ portion expose different interfaces, but are allowed to freely interop between
 one another internally.
 
-siclibcpp is the namespace for the C++ inferface
-siclibrs is the namespace for the Rust interface
+- siclibcpp is the namespace for the C++ inferface
+- siclibrs is the namespace for the Rust interface
 
 ## Installation
 

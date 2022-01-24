@@ -14,6 +14,19 @@ build = "build.rs"
 crate-type = ["lib", "cdylib"]
 path = "src/siclibrs/lib.rs"
 
+[profile.test]
+opt-level = 0
+debug = true
+split-debuginfo = "packed"  # Platform-specific.
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false
+
+
 [dependencies]
 cxx = "1.0"
 
