@@ -26,6 +26,8 @@ jobs:
     # - name: Build_CPP
     #   run: ${{github.workspace}}/scripts/test.sh
 
+    - name: config_hs
+      run: cabal update
 
     - name: Build_hs
       run: cabal build
