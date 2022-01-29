@@ -5,7 +5,7 @@
 [![License: MIT][mit-image]][mit-url] [![Github Actions][github-actions-image]][github-actions-url]
  <!-- [![CPP][cpp-image]][cpp-url] [![RUST][rust-image]][rust-url] -->
 
-A Rust/C++ library with custom implementations to use in other projects
+A Rust/C++/Haskell library with custom implementations to use in other projects.
 
 ## Design Philosophy
 
@@ -15,6 +15,9 @@ one another internally.
 
 - siclibcpp is the namespace for the C++ inferface
 - siclibrs is the namespace for the Rust interface
+- siclibhs is the namespace for the Haskell interface
+- siclibc is the namespace for the C interface (not first class)
+
 
 ## Installation
 

@@ -26,6 +26,10 @@ jobs:
     # - name: Build_CPP
     #   run: ${{github.workspace}}/scripts/test.sh
 
+
+    - name: Build_hs
+      run: cabal build
+
     - name: Build_RUST
       run: cargo build --verbose
 

@@ -77,6 +77,27 @@ impl<T> ops::Drop for RawVector<T> {
         }
     }
 }
+
+struct RawValIter<T> {
+    begin: *const T,
+    end: *const T,
+}
+
+impl<T> RawValIter<T> {
+    // unsafe to construct since no associated lifetime, this is necessary to
+    // store the Iter in the same struct as it's actual allocation
+    unsafe fn new(slice: &[T]) -> Self {
+        return RawValIter {
+            begin: slice.as_ptr(),
+            end: if slice.len() == 0 {
+                slice.as_ptr()
+            } else {
+                slice.as_ptr().add(slice.len())
+            },
+        };
+    }
+}
+
 pub struct Vector<T> {
     buffer: RawVector<T>,
     length: usize,
@@ -277,6 +298,12 @@ impl<T> ops::Drop for IntoIter<T> {
         // drop any remaining elements by reading them
         for _ in &mut *self {}
     }
+}
+
+struct Drain<'a, T: 'a> {
+    vector: marker::PhantomData<&'a mut Vector<T>>,
+    begin: *const T,
+    end: *const T,
 }
 
 #[cfg(test)]
