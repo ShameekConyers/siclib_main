@@ -6,8 +6,8 @@ use std::ops;
 use std::option;
 use std::option::Option;
 use std::unimplemented;
-pub struct List {
-    head: Link,
+pub struct List<T> {
+    head: Link<T>,
 }
 
 // enum Link {
@@ -15,50 +15,54 @@ pub struct List {
 //     Data(Box<Node>),
 // }
 
-type Link = Option<Box<Node>>;
+type Link<T> = Option<Box<Node<T>>>;
 
-struct Node {
-    elem: i32,
-    next: Link,
+struct Node<T> {
+    elem: T,
+    next: Link<T>,
 }
 
-impl List {
+impl<T> List<T> {
     pub fn new() -> Self {
         return List { head: Link::None };
     }
 
-    pub fn push(&mut self, elem: i32) {
+    pub fn push(&mut self, elem: T) {
         let new_node = Box::new(Node {
             elem: elem,
-            next: mem::replace(&mut self.head, Link::None),
+            next: self.head.take(),
         });
 
         self.head = Link::Some(new_node);
     }
 
-    pub fn pop(&mut self) -> Option<i32> {
-        let result;
-        match mem::replace(&mut self.head, Link::None) {
-            Link::None => {
-                result = Option::None;
-            }
-            Link::Some(node) => {
-                result = Option::Some(node.elem);
-                self.head = node.next;
-            }
-        }
+    pub fn pop(&mut self) -> Option<T> {
+        return self.head.take().map(|node| {
+            self.head = node.next;
+            return node.elem;
+        });
+    }
 
-        return result;
+    pub fn peek(&self) -> Option<&T> {
+        return self.head.as_ref().map(|node| {
+            return &node.elem;
+        });
+    }
+
+    pub fn peek_mut(&mut self) -> Option<&mut T> {
+        return self.head.as_mut().map(|node| {
+            return &mut node.elem;
+        });
     }
 }
 
-impl ops::Drop for List {
+impl<T> ops::Drop for List<T> {
     fn drop(&mut self) {
-        let mut cur_link = mem::replace(&mut self.head, Link::None);
+        let mut cur_link = self.head.take();
 
         // while true let ...
         while let Link::Some(mut boxed_node) = cur_link {
-            cur_link = mem::replace(&mut boxed_node.next, Link::None)
+            cur_link = boxed_node.next.take()
         }
     }
 }
@@ -69,7 +73,7 @@ mod tests {
 
     #[test]
     fn list_init() {
-        let _list = List::new();
+        let _list = List::<i32>::new();
     }
 
     #[test]
@@ -85,5 +89,25 @@ mod tests {
 
         list.push(5);
         assert_eq!(list.pop(), Option::Some(5));
+    }
+
+    #[test]
+    fn list_peek_test() {
+        let mut list = List::new();
+        assert_eq!(list.peek(), Option::None);
+        assert_eq!(list.peek_mut(), Option::None);
+
+        list.push(1);
+        list.push(3);
+
+        assert_eq!(list.peek(), Option::Some(&3));
+
+        // let _ = list.peek_mut().replace(&mut 5);
+        // assert_eq!(list.peek(), Option::Some(&5));
+
+        list.peek_mut().map(|value| {
+            *value = 10;
+        });
+        assert_eq!(list.peek(), Option::Some(&10));
     }
 }
