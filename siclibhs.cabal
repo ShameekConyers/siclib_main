@@ -28,7 +28,7 @@ library
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base ^>=4.*
+    build-depends:    base >=4.10
     hs-source-dirs:   src
     default-language: Haskell2010
 
@@ -41,7 +41,7 @@ executable siclibhs_exec
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
-        base ^>=4.*
+        base >=4.10,
         Siclibhs
 
     hs-source-dirs:   src/Siclibhs
@@ -52,4 +52,4 @@ test-suite siclibhs-test
     type:             exitcode-stdio-1.0
     hs-source-dirs:   tests/Siclibhs
     main-is:          Main_test.hs
-    build-depends:    base ^>=4.*
+    build-depends:    base >=4.10
