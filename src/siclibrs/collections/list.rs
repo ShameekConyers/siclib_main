@@ -1,6 +1,7 @@
 use ::std;
 use std::assert_eq;
 use std::boxed::Box;
+use std::iter::{IntoIterator, Iterator};
 use std::mem;
 use std::ops;
 use std::option;
@@ -9,11 +10,6 @@ use std::unimplemented;
 pub struct List<T> {
     head: Link<T>,
 }
-
-// enum Link {
-//     Empty,
-//     Data(Box<Node>),
-// }
 
 type Link<T> = Option<Box<Node<T>>>;
 
@@ -54,6 +50,22 @@ impl<T> List<T> {
             return &mut node.elem;
         });
     }
+
+    pub fn into_iter(self) -> IntoIter<T> {
+        return IntoIter { next: self };
+    }
+
+    pub fn iter(&self) -> Iter<'_, T> {
+        return Iter {
+            next: self.head.as_ref().map(|node| &**node),
+        };
+    }
+
+    pub fn iter_mut(&mut self) -> IterMut<'_, T> {
+        return IterMut {
+            next: self.head.as_mut().map(|node| &mut **node),
+        };
+    }
 }
 
 impl<T> ops::Drop for List<T> {
@@ -64,6 +76,47 @@ impl<T> ops::Drop for List<T> {
         while let Link::Some(mut boxed_node) = cur_link {
             cur_link = boxed_node.next.take()
         }
+    }
+}
+
+pub struct IntoIter<T> {
+    next: List<T>,
+}
+
+impl<T> Iterator for IntoIter<T> {
+    type Item = T;
+    fn next(&mut self) -> Option<Self::Item> {
+        return self.next.pop();
+    }
+}
+
+pub struct Iter<'a, T> {
+    next: Option<&'a Node<T>>,
+}
+
+impl<'a, T> Iterator for Iter<'a, T> {
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        return self.next.map(|node| {
+            // self.next = node.next.as_ref().map::<&Node<T>, _>(|node| &node);
+            self.next = node.next.as_ref().map(|node| &**node);
+            return &node.elem;
+        });
+    }
+}
+
+pub struct IterMut<'a, T> {
+    next: Option<&'a mut Node<T>>,
+}
+
+impl<'a, T> Iterator for IterMut<'a, T> {
+    type Item = &'a mut T;
+    fn next(&mut self) -> Option<Self::Item> {
+        // We want to consume the mutable reference value
+        return self.next.take().map(|node| {
+            self.next = node.next.as_mut().map(|node| &mut **node);
+            return &mut node.elem;
+        });
     }
 }
 
@@ -109,5 +162,45 @@ mod tests {
             *value = 10;
         });
         assert_eq!(list.peek(), Option::Some(&10));
+    }
+
+    #[test]
+    fn list_into_iter_test() {
+        let mut list = List::new();
+        for i in 0..10 {
+            list.push(i);
+        }
+
+        let mut iter = list.into_iter();
+
+        for i in (0..10).rev() {
+            assert_eq!(Option::Some(i), iter.next());
+        }
+
+        assert_eq!(iter.next(), Option::None);
+    }
+
+    #[test]
+    fn list_iter_test() {
+        let mut list = List::new();
+        for i in 0..10 {
+            list.push(i);
+        }
+
+        let mut iter = list.iter();
+        for i in (0..10).rev() {
+            assert_eq!(Option::Some(&i), iter.next());
+        }
+
+        assert_eq!(iter.next(), Option::None);
+
+        let mut iter = list.iter();
+        for i in (0..10).rev() {
+            assert_eq!(Option::Some(&i), iter.next());
+        }
+
+        assert_eq!(iter.next(), Option::None);
+
+        mem::drop(list);
     }
 }

@@ -1,4 +1,4 @@
-module Siclibhs.Lib (someFunc) where
+module SicLibHs.Lib (someFunc) where
 
 someFunc :: IO ()
 someFunc = putStrLn "someFjuenc"

@@ -1,8 +1,8 @@
 module Main where
 
-import qualified Siclibhs.Lib (someFunc)
+import qualified SicLibHs.Lib (someFunc)
 
 main :: IO ()
 main = do
   putStrLn "Hello, Haskell!"
-  Siclibhs.Lib.someFunc
+  SicLibHs.Lib.someFunc

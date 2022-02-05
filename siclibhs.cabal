@@ -1,5 +1,5 @@
 cabal-version:      3.0
-name:               Siclibhs
+name:               SicLibHs
 version:            0.1.0.0
 synopsis:
 
@@ -21,7 +21,7 @@ extra-source-files:
     readme.md
 
 library
-    exposed-modules: Siclibhs.Lib
+    exposed-modules: SicLibHs.Lib
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -42,14 +42,14 @@ executable siclibhs_exec
     -- other-extensions:
     build-depends:
         base >=4.10,
-        Siclibhs
+        SicLibHs
 
-    hs-source-dirs:   src/Siclibhs
+    hs-source-dirs:   src/SicLibHs
     default-language: Haskell2010
 
 test-suite siclibhs-test
     default-language: Haskell2010
     type:             exitcode-stdio-1.0
-    hs-source-dirs:   tests/Siclibhs
+    hs-source-dirs:   tests/SicLibHs
     main-is:          Main_test.hs
     build-depends:    base >=4.10
